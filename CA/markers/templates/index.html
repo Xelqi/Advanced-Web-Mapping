@@ -1,0 +1,101 @@
+{% load leaflet_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Styles -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'script.js' %}">   
+    </script>
+    <!-- Title -->
+    <title> {% block title %}Document{% endblock%}</title>
+    {% leaflet_js %}
+    {% leaflet_css %}
+</head>
+<body>
+  <!-- Navbar -->
+  <div id="navbar">       
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href={% url 'home' %}>Dublin Bikes</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href={% url 'map' %}>Map</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+    <!-- Main Content-->
+    {% block content %}
+    <div id="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div id="description" class="col-lg-6 col-md-12 col-sm-12">
+            <div class="col">
+              <h2 class="heading" style="font-style: italic">Station Locations</h2>
+              {% block welcome%}
+              {% if user.is_authenticated %}  
+              <p class="map-txt"style="font-style: italic" >Your are logged in as : {{ user.username }}!
+              <br>Here you can see the locations of all the stations 
+              <br>For more functionality create an Account and Sign in then navigate to Map
+              </p>
+              {% else %}
+              <p class="map-txt"style="font-style: italic" >Here you can see the locations of all the stations 
+                <br>For more functionality create an Account and Sign in then navigate to Map
+                </p>
+              {% endif %}
+              {% endblock%}
+              <div class="text-center mt-3">
+              <h3>1 DAY TICKET - €3.5</h3>
+              <p>For short term hire, a 1 Day Ticket will give you access to all the benefits of the NOW dublinbikes service. Ideal for tourists and visitors as a way of getting around and exploring the city. The first 30 minutes of each journey is free. After this rental charges are applied.</p>
+              <h3>3 DAY TICKET - €5</h3>
+              <p>For short term hire, a 3 Day Ticket will give you access to all the benefits of the NOW dublinbikes service. Ideal for tourists and visitors as a way of getting around and exploring the city. The first 30 minutes of each journey is free. After this rental charges are applied. </p>
+              <h3>ANNUAL SUBSCRIPTION - €35</h3>
+              <p>With an Annual Subscription you can rent a bike 365 days a year for an annual fee of €35. The first 30 minutes of each journey is free, after this rental charges apply.</p>
+              <h3>E-DUBLINBIKES - €60</h3>
+              <p>e-dublinbikes are available to annual subscribers for an additional €60 per year. Once you have signed up for this option, we will organize the delivery of a personal battery to your address. This subscription option is independent of your annual subscription and will renew independently of it until the battery is returned. Non return/loss of batteries will result in a charge of €150.</p>
+              {% if user.is_authenticated %}  
+              <div class="d-flex justify-content-center">
+                <a href="{% url 'logout' %}" class="btn btn-secondary" style="margin-right: 10px;">Log Out</a>
+                <form method="post" action="{% url 'delete' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-secondary" style="margin-left: 10px;">Delete Account</button>
+                </form>
+            </div>
+              {% else %}
+              <a href="{% url 'login' %}" class="btn btn-secondary">Log In</a>
+              <a href="{% url 'register' %}" class="btn btn-secondary">Create Account</a>
+              {% endif %}
+              </div>
+            </div>
+          </div>
+          {% comment %} The Map {% endcomment %}
+            <div class="col-lg-6 col-md-12 col-sm-12 mt-2">
+            <div id="bikes" data-url="{% url 'bike_data' %}"></div>
+          </div>
+        </div>
+    </div>
+      <script>
+        {% comment %} 
+        Calling Add bikes from script.js, which is imported in index.html
+        {% endcomment %}
+        add_bike_locations();
+      </script>
+  </div>
+  {% endblock %}
+</body>
+</html>

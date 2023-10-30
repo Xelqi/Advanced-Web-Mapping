@@ -1,0 +1,48 @@
+{% extends "index.html" %}
+{% load static %}
+{% load leaflet_tags %}
+{% leaflet_js %}
+{% leaflet_css %}
+
+{% block welcome%}
+{% if user.is_authenticated %}
+<p class="map-txt" style="font-style: italic">Welcome back {{ user.username }}!
+<br>Now that you are logged in you can :
+<br>- Show Current Location
+<br>- Add a your location to map
+<br>- Delete your location from map
+<br>- Edit your added location
+</p>
+<div class="text-center">   
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
+            <form id="locationForm" method="post">
+                {% csrf_token %}
+                <button onclick="getLocation()" type="button" class="btn btn-secondary">Show Location</button>
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
+            <form id="locationForm" method="post">
+                {% csrf_token %}
+                <button onclick="get_Location_Prompt()" type="button" class="btn btn-secondary">Add Location</button>
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
+            <form id="locationForm" method="post">
+                {% csrf_token %}
+                <button onclick="editLocationOnMap()" type="button" class="btn btn-secondary">Edit Location</button>
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
+            <form id="locationForm" method="post">
+                {% csrf_token %}
+                <button onclick="deleteLocationFromMap()" type="button" class="btn btn-secondary">Delete Location</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% else %}
+    <p class="map-txt"style="font-style: italic" >Log In For More Features
+    </p>
+{% endif %}
+{% endblock%}

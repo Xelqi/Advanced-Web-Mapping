@@ -1,0 +1,22 @@
+/* Map Page */
+/* Leaflet Map  Div */
+
+div#bikes {
+    width: 100%; /* Set the initial width to 100% */
+    aspect-ratio: 1; /* Maintain a square aspect ratio for a circular shape */
+    border-radius: 50%; 
+}
+
+
+.heading {
+    text-align: center;
+}
+
+.map-txt {
+    text-align: center;
+}
+@media screen and (max-width: 768px){
+    div#bikes {
+        border-radius: 0;
+    }
+}
