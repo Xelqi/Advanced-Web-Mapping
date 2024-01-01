@@ -1,22 +1,148 @@
+/* Navbar */
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+.nav {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  background-color: rgba(240, 240, 240, 0.1);
+  box-shadow: 0 0.5rem 1rem rgba(55, 155, 255, 0.15) !important;
+}
+
+.nav-item {
+  margin: auto 10px;
+}
+
+.nav-link {
+  color: #3b3b3b !important;
+  font-weight: lighter !important;
+  font-size: xx-large !important;
+  font-family: "Raleway", sans-serif;
+}
+
+.nav-link:hover {
+  color: rgba(16, 116, 193, 0.828) !important;
+  transform: scale(1.2); /* Adjust the scale factor as needed */
+  transition: transform 0.5s;
+  text-shadow: 0 0 10px #d4e8f4, 0 0 10px #ffffff, 0 0 8px #95b1fff7;
+}
+
+/* Fonts */
+
+h1, h2, h3, h4 {
+  font-weight: lighter !important;
+  color: #3b3b3b !important;
+  font-family: "Raleway", sans-serif;
+  
+}
+p {
+  color: #3b3b3b !important;
+}
+
+/* Btns */
+
+.login-btn {
+  background-color: rgba(111, 191, 253, 0.223) !important;
+  border-color: rgba(111, 191, 253, 0.511) !important;
+  border-radius: 25px !important; /* Adjust the border-radius to make it more like a pill */
+  transition: background-color 0.3s ease-in-out; /* Add a smooth transition effect */
+}
+
+.login-btn:hover {
+  background-color: rgba(
+    111,
+    191,
+    253,
+    0.8
+  ) !important; /* Adjust the hover color as needed */
+}
+
+.card-btn {
+  background-color: rgba(111, 191, 253, 0.223) !important;
+  border-color: rgba(111, 191, 253, 0.511) !important;
+  transition: background-color 0.3s ease-in-out; /* Add a smooth transition effect */
+}
+
+.card-btn:hover {
+  background-color: rgba(
+    111,
+    191,
+    253,
+    0.8
+  ) !important; /* Adjust the hover color as needed */
+}
+
+.logout-btn {
+  background-color: rgba(111, 191, 253, 0.223) !important;
+  border-color: rgba(111, 191, 253, 0.511) !important;
+  transition: background-color 0.3s ease-in-out; /* Add a smooth transition effect */
+}
+
+.delete-btn {
+  background-color: rgba(255, 0, 0, 0.564) !important;
+  border-color: rgba(0, 0, 0, 0.589) !important;
+  transition: background-color 0.3s ease-in-out; /* Add a smooth transition effect */
+}
+
+.logout-btn:hover {
+  background-color: rgba(
+    111,
+    191,
+    253,
+    0.8
+  ) !important; /* Adjust the hover color as needed */
+}
+
+.delete-btn:hover {
+  background-color: rgba(250, 0, 0, 0.79) !important; /* Adjust the hover color as needed */
+}
+
+/* Get-Started page */
+
+#icon-grid > h2 {
+  margin-top: 10px;
+}
+
+/* Subscription page */
+/* Card */
+
+.card {
+  text-align: center !important;
+  box-shadow: 0 0.5rem 1rem rgba(55, 155, 255, 0.15) !important;
+}
+
+.clock:hover {
+  transform: scale(1.1); /* Adjust the scale factor as needed */
+  transition: transform 0.5s;
+}
+
+p.card-text {
+  padding: 10px;
+}
+
+h3.card-footer {
+  margin: 0px;
+}
 /* Map Page */
+
 /* Leaflet Map  Div */
 
 div#bikes {
-    width: 100%; /* Set the initial width to 100% */
-    aspect-ratio: 1; /* Maintain a square aspect ratio for a circular shape */
-    border-radius: 50%; 
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 85vh;
+  border-radius: 1%;
+  aspect-ratio: 1; /* Maintain a square aspect ratio for a circular shape */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Adjust the values as needed */
 }
 
-
 .heading {
-    text-align: center;
+  text-align: center;
 }
 
 .map-txt {
-    text-align: center;
+  text-align: center;
 }
-@media screen and (max-width: 768px){
-    div#bikes {
-        border-radius: 0;
-    }
+@media screen and (max-width: 768px) {
+  div#bikes {
+    border-radius: 0;
+  }
 }

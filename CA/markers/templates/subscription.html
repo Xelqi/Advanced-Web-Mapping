@@ -1,0 +1,84 @@
+{% extends "index2.html" %} {% load static %} {% load leaflet_tags %}
+{%leaflet_js %} {% leaflet_css %} {% block content%}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4 col-md-12 col-sm-12 mt-4">
+      <img src="../static/assets/think.jpg" alt="" class="img-fluid" />
+    </div>
+    <div class="col-lg-4 col-md-12 col-sm-12 text-center">
+      <h1 class="mt-5 border-bottom" style="font-weight: bolder" >Subscription Options</h1>
+      <h4 class="mt-4">
+        Whether you are a regular cyclist or an occasional user choose a
+        subscription option that works for you.
+      </h4>
+    </div>
+    <div class="col-lg-4 col-md-12 col-sm-12 mt-4">
+      <img src="../static/assets/city.jpg" alt="" class="img-fluid" />
+    </div>
+
+    <div class="row row-cols-1 row-cols-lg-4">
+      <div class="col">
+        <div class="card h-100 clock">
+          <div class="card-body">
+            <h3 class="card-title">1 DAY TICKET</h3>
+            <p class="card-text">
+              For short term hire, a 1 Day Ticket will give you access to all
+              the benefits of the NOW dublinbikes service. Ideal for tourists
+              and visitors as a way of getting around and exploring the city.
+              The first 30 minutes of each journey is free. After this rental
+              charges are applied.
+            </p>
+          </div>
+          <h3 class="card-footer">€3.5</h3>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100 clock">
+          <div class="card-body">
+            <h3 class="card-title">3 DAY TICKET</h3>
+            <p class="card-text">
+              For short term hire, a 3 Day Ticket will give you access to all
+              the benefits of the NOW dublinbikes service. Ideal for tourists
+              and visitors as a way of getting around and exploring the city.
+              The first 30 minutes of each journey is free. After this rental
+              charges are applied.
+            </p>
+          </div>
+          <h3 class="card-footer">€5</h3>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100 clock">
+          <div class="card-body">
+            <h3 class="card-title">ANNUAL</h3>
+            <p class="card-text">
+              With an Annual Subscription you can rent a bike 365 days a year
+              for an annual fee of €35. The first 30 minutes of each journey is
+              free, after this rental charges apply.
+            </p>
+          </div>
+          <h3 class="card-footer">€35</h3>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100 clock">
+          <div class="card-body">
+            <h3 class="card-title">E-DUBLINBIKES</h3>
+            <p class="card-text">
+              E-dublinbikes are available to annual subscribers for an
+              additional €60 per year. Once you have signed up for this option,
+              we will organize the delivery of a personal battery to your
+              address. This subscription option is independent of your annual
+              subscription and will renew independently of it until the battery
+              is returned. Non return/loss of batteries will result in a charge
+              of €150.
+            </p>
+          </div>
+          <h3 class="card-footer">€60</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock%}

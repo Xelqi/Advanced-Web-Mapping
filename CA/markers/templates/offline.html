@@ -1,0 +1,16 @@
+{% extends "index2.html" %} {% load static %} {% load leaflet_tags %}
+{%leaflet_js %} {% leaflet_css %} {% block content%}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4 col-md-12 col-sm-12 mt-4">
+      <img src="../static/assets/think.jpg" alt="" class="img-fluid" />
+    </div>
+    <div class="col-lg-4 col-md-12 col-sm-12 text-center">
+      <h1 class="mt-5 border-bottom" style="font-weight: bolder" >You are Offline</h1>
+      <h4 class="mt-4">
+        Return Online to be able to use the app
+      </h4>
+    </div>
+  </div>
+</div>
+{% endblock%}

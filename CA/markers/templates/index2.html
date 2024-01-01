@@ -1,0 +1,127 @@
+{% load leaflet_tags %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  {% load pwa %}
+  {% progressive_web_app_meta %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Styles -->
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <!-- Scripts -->
+    <script
+    src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+    ></script>
+    
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'script.js' %}"></script>
+   
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Title -->
+    <title>{% block title %}Dublin Bike PWA{% endblock%}</title>
+    {% leaflet_js %} {% leaflet_css %}
+  </head>
+  <body>
+    <!-- Navbar -->
+    <ul class="nav justify-content-center">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'index2' %}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'get-started' %}">Get Started</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'subscriptions' %}">Subscriptions</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'map' %}">Bikes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'members' %}">Members</a>
+      </li>
+    </ul>
+    <!-- Main Content-->
+    {% block content %}
+    <div class="container my-3">
+      <div class="row">
+        <div class="col-lg-6 col-md-12 col-sm-12 order-lg-0 order-md-0 order-sm-0">
+          <img src="../static/assets/tree_bike.jpg" alt="" class="img-fluid" />
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12 text-center order-lg-1 order-md-1 order-sm-1">
+          <h1 class="mt-3 border-bottom">Dublin Bikes</h1>
+          <p class="lead">
+            Odio perferendis inventore rerum dolores reprehenderit iste
+            adipisci, obcaecati fuga velit quibusdam praesentium et, delectus
+            minus non qui ut inventore voluptate, aliquam neque minus quibusdam
+            et doloremque eligendi. Quo perferendis iusto molestiae sed totam
+            cumque sint rerum, minima harum nisi a architecto quas corporis
+            odio, nostrum dolorem nobis quisquam blanditiis totam beatae, sequi
+            quam voluptas vero, cum sint odit inventore? Odit ad quas optio
+            nemo, perspiciatis rem impedit accusantium similique, voluptates sed
+            corporis iure facere cupiditate accusantium sunt ut eaque blanditiis
+            odio, fugit suscipit blanditiis est enim corrupti, iste commodi
+            provident? Facilis voluptate debitis esse nam quaerat ut, minus
+            saepe reprehenderit a esse accusamus fuga est officia atque
+            reiciendis corrupti?
+          </p>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 text-center order-lg-2 order-md-2 order-sm-2 text-center">
+          <a href="{% url 'get-started' %}" class="login-btn btn btn-lg">Get Started</a >
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12 order-lg-4 order-md-4 order-sm-4">
+          <img
+            src="../static/assets/backpack_map.jpg"
+            alt=""
+            class="img-fluid"
+          />
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12 order-lg-3 order-md-3 order-sm-3">
+          <h1 class="mt-3 border-bottom text-center">Map System</h1>
+          <p class="lead">
+            Odio perferendis inventore rerum dolores reprehenderit iste
+            adipisci, obcaecati fuga velit quibusdam praesentium et, delectus
+            minus non qui ut inventore voluptate, aliquam neque minus quibusdam
+            et doloremque eligendi. Quo perferendis iusto molestiae sed totam
+            cumque sint rerum, minima harum nisi a architecto quas corporis
+            odio, nostrum dolorem nobis quisquam blanditiis totam beatae, sequi
+            quam voluptas vero, cum sint odit inventore? Odit ad quas optio
+            nemo, perspiciatis rem impedit accusantium similique, voluptates sed
+            corporis iure facere cupiditate accusantium sunt ut eaque blanditiis
+            odio, fugit suscipit blanditiis est enim corrupti, iste commodi
+            provident? Facilis voluptate debitis esse nam quaerat ut, minus
+            saepe reprehenderit a esse accusamus fuga est officia atque
+            reiciendis corrupti?
+          </p>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  </body>
+</html>

@@ -1,48 +1,37 @@
-{% extends "index.html" %}
-{% load static %}
-{% load leaflet_tags %}
-{% leaflet_js %}
-{% leaflet_css %}
-
-{% block welcome%}
-{% if user.is_authenticated %}
-<p class="map-txt" style="font-style: italic">Welcome back {{ user.username }}!
-<br>Now that you are logged in you can :
-<br>- Show Current Location
-<br>- Add a your location to map
-<br>- Delete your location from map
-<br>- Edit your added location
-</p>
-<div class="text-center">   
+{% extends "index2.html" %} {% load static %} {% load leaflet_tags %} 
+{%leaflet_js %} {% leaflet_css %} {% block content%}
+<div class="container"> 
     <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
-            <form id="locationForm" method="post">
-                {% csrf_token %}
-                <button onclick="getLocation()" type="button" class="btn btn-secondary">Show Location</button>
-            </form>
+        <div class="col-lg-6 col-md-12 col-sm-12 mt-4 order-lg-1 order-md-0 order-sm-0">
+            <img
+            src="../static/assets/woman_bike.jpg"
+            alt=""
+            class="img-fluid"
+          />
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
-            <form id="locationForm" method="post">
-                {% csrf_token %}
-                <button onclick="get_Location_Prompt()" type="button" class="btn btn-secondary">Add Location</button>
-            </form>
+        <div class="col-lg-6 col-md-12 col-sm-12 text-center order-lg-0 order-md-1 order-sm-1 mt-5">
+            <h1 class="mt-3 border-bottom">Live Bike Stations & Availability</h1>
+            <p class="lead">
+                Odio perferendis inventore rerum dolores reprehenderit iste
+                adipisci, obcaecati fuga velit quibusdam praesentium et, delectus
+                minus non qui ut inventore voluptate, aliquam neque minus quibusdam
+                et doloremque eligendi. Quo perferendis iusto molestiae sed totam
+                cumque sint rerum, minima harum nisi a architecto quas corporis
+                odio, nostrum dolorem nobis quisquam blanditiis totam beatae, sequi
+                quam voluptas vero, cum sint odit inventore? Odit ad quas optio
+                nemo, perspiciatis rem impedit accusantium similique, voluptates sed
+                corporis iure facere cupiditate accusantium sunt ut eaque blanditiis
+                odio, fugit suscipit blanditiis est enim corrupti, iste commodi
+                provident? Facilis voluptate debitis esse nam quaerat ut, minus
+                saepe reprehenderit a esse accusamus fuga est officia atque
+                reiciendis corrupti?
+            </p>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
-            <form id="locationForm" method="post">
-                {% csrf_token %}
-                <button onclick="editLocationOnMap()" type="button" class="btn btn-secondary">Edit Location</button>
-            </form>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
-            <form id="locationForm" method="post">
-                {% csrf_token %}
-                <button onclick="deleteLocationFromMap()" type="button" class="btn btn-secondary">Delete Location</button>
-            </form>
-        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 order-lg-2 order-md-2 order-sm-2" id="bikes" data-url="{% url 'bike-list-create' %}"></div>
+        <script>
+            add_bike_locations2();
+          </script>
     </div>
 </div>
-{% else %}
-    <p class="map-txt"style="font-style: italic" >Log In For More Features
-    </p>
-{% endif %}
+</div>
 {% endblock%}

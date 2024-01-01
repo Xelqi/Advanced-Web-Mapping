@@ -1,0 +1,226 @@
+{% extends "index2.html" %} {% load static %} {% load leaflet_tags %} 
+{%leaflet_js %} {% leaflet_css %} {% block content%}
+{% comment %} The Map {% endcomment %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+<div class="container"> 
+    <div class="row">
+        <div class="col-lg-6 col-md-12 col-sm-12 text-center">
+            <div class="container px-3 py-3 mt-1">
+                <h2 class="pb-2 border-bottom text-center">Member Map Features</h2>
+                {% if user.is_authenticated %}
+                <div class="row g-2 py-2 row-cols-1 row-cols-lg-3">
+                    <!-- Card for "Add Location" -->
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column text-center">
+                                <h4 class="card-title">Add Location</h4>
+                                <p class="card-text">Adds a location to the map database</p>
+                            </div>
+                            <button type="button" class="card-footer card-btn btn btn-lg" data-toggle="modal" data-target="#inputModal" onclick="hideIdField()"> Add
+                            </button>
+                        </div>
+                    </div>
+            
+                    <!-- Card for "Edit Location" -->
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column text-center">
+                                <h4 class="card-title">Edit Location</h4>
+                                <p class="card-text">Edits a location on the map and updates database</p>              
+                            </div>
+                            <button type="button" class="card-footer card-btn btn btn-lg" data-toggle="modal" data-target="#inputModal" onclick="showIdField()"> Edit
+                            </button>
+                        </div>
+                    </div>
+            
+                    <!-- Card for "Delete Location" -->
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column text-center">
+                                <h4 class="card-title">Delete Location</h4>
+                                <p class="card-text">Deletes an existing location from the map & database</p>                             
+                            </div>
+                            <button type="button" class="card-footer card-btn btn btn-lg" data-toggle="modal" data-target="#inputModal" onclick="deleteField()"> Remove
+                            </button>
+                        </div>
+                    </div>
+            
+                    <!-- Card for "Add Current Location" -->
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column text-center">
+                                <h4 class="card-title">Add Current Location</h4>
+                                <p class="card-text">Shows your current location & adds it to local storage so ONLY you can see it</p>                               
+                            </div>
+                            <button type="button" class="card-footer card-btn btn btn-lg" onclick="getLocation()"> Show Location
+                            </button>
+                        </div>
+                    </div>
+            
+                    <!-- Card for "Routing" -->
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column text-center">
+                                <h4 class="card-title">Routing</h4>
+                                <p class="card-text">Shows you the route to take from one point to another. <br> Lasts 10 seconds then dissapears</p>                               
+                            </div>
+                            <button type="button" class="card-footer card-btn btn btn-lg" data-toggle="modal" data-target="#inputModal" onclick="routeField()"> Lets Go!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+              </div>
+              <div class="col-lg-6 col-md-12 col-sm-12 mt-5" id="bikes" data-url="{% url 'bike-list-create' %}"></div>
+              <div class="col-lg-12 col-md-12 col-sm-12 mt-1 mb-2 text-center">
+                <h1 class="mt-4 border-bottom">Profile Options</h1>
+                <div class="d-flex justify-content-center">
+                  <a href="{% url 'logout' %}" class="logout-btn btn btn-lg me-2">Log Out</a>
+                  <form method="post" action="{% url 'delete' %}">
+                      {% csrf_token %}
+                      <button type="submit" class="delete-btn btn btn-lg">Delete Account</button>
+                  </form>
+              </div>
+              {% else %}  
+              <div>
+                <h3 class="pb-2 text-center">Please create an account and log in for member features</h2>
+              <div>
+              {% endif %}
+        </div>
+        <script>
+            add_bike_locations();
+
+            function showIdField() {
+              document.getElementById('idField').style.display = 'block';
+              document.getElementById('nameField').style.display = 'block';
+              document.getElementById('addressField').style.display = 'block';
+              document.getElementById('idField2').style.display = 'none';
+              document.getElementById('inputID').readOnly = false;
+
+              document.getElementById('add_btn').style.display = 'none';
+              document.getElementById('edit_btn').style.display = 'inline-block';
+              document.getElementById('delete_btn').style.display = 'none';
+              document.getElementById('route_btn').style.display = 'none';
+            }
+          
+            function hideIdField() {
+              document.getElementById('idField').style.display = 'none';
+              document.getElementById('idField2').style.display = 'none';
+              document.getElementById('inputID').readOnly = true;
+              document.getElementById('nameField').style.display = 'block';
+              document.getElementById('addressField').style.display = 'block';
+
+              document.getElementById('edit_btn').style.display = 'none';
+              document.getElementById('add_btn').style.display = 'inline-block';
+              document.getElementById('delete_btn').style.display = 'none';
+              document.getElementById('route_btn').style.display = 'none';
+            }
+
+            function deleteField() {
+              document.getElementById('idField').style.display = 'block';
+              document.getElementById('idField2').style.display = 'none';
+              document.getElementById('nameField').style.display = 'none';
+              document.getElementById('addressField').style.display = 'none';
+              document.getElementById('inputID').readOnly = false;
+              
+              document.getElementById('edit_btn').style.display = 'none';
+              document.getElementById('add_btn').style.display = 'none';
+              document.getElementById('delete_btn').style.display = 'inline-block';
+              document.getElementById('route_btn').style.display = 'none';
+            }
+
+            function routeField() {
+              document.getElementById('idField').style.display = 'block';
+              document.getElementById('idField2').style.display = 'block';
+              document.getElementById('nameField').style.display = 'none';
+              document.getElementById('addressField').style.display = 'none';
+              document.getElementById('inputID').readOnly = false;
+              document.getElementById('inputID2').readOnly = false;
+              
+              document.getElementById('edit_btn').style.display = 'none';
+              document.getElementById('add_btn').style.display = 'none';
+              document.getElementById('delete_btn').style.display = 'none';
+              document.getElementById('route_btn').style.display = 'inline-block';
+            }
+            // Function to handle saving the input values
+            function saveInput() {
+              // Retrieve values from input fields
+              var address = $('#inputAddress').val();
+              var name = $('#inputName').val();
+              
+              add_marker(name, address);
+            }
+
+            function edit_marker() {
+              // Retrieve values from input fields
+              var id = $('#inputID').val();
+              var address = $('#inputAddress').val();
+              var name = $('#inputName').val();
+              
+              edit_marker_details(id, name, address);
+            }
+
+            function delete_marker() {
+              // Retrieve values from input fields
+              var id = $('#inputID').val();
+
+              remove_marker(id);
+            }
+
+            function routes_id() {
+              var id1 = $('#inputID').val();
+              var id2 = $('#inputID2').val();
+
+              routingForMarkers(id1, id2);
+            }
+          </script>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="inputModal" tabindex="-1" role="dialog" aria-labelledby="inputModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="inputModalLabel">Input Form</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Input fields for Address, Latitude, and Longitude -->
+        
+          <div class="form-group" id="idField">
+            <label for="inputID">ID</label>
+            <input type="text" class="form-control" id="inputID" placeholder="Enter ID" readonly>
+          </div>
+          <div class="form-group" id="idField2">
+            <label for="inputID">ID</label>
+            <input type="text" class="form-control" id="inputID2" placeholder="Enter second ID" readonly>
+          </div>
+          <div class="form-group" id="nameField">
+            <label for="inputName">Name</label>
+            <input type="text" class="form-control" id="inputName" placeholder="Enter Marker Name">
+          </div>
+          <div class="form-group" id="addressField">
+            <label for="inputAddress">Address</label>
+            <input type="text" class="form-control" id="inputAddress" placeholder="Enter Address">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="add_btn"  class="btn btn-primary" onclick="saveInput()" data-dismiss="modal">Save</button>
+        <button type="button" id="edit_btn" class="btn btn-primary" onclick="edit_marker()" data-dismiss="modal">Edit</button>
+        <button type="button" id="delete_btn" class="btn btn-primary" onclick="delete_marker()" data-dismiss="modal">Delete</button>
+        <button type="button" id="route_btn" class="btn btn-primary" onclick="routes_id()" data-dismiss="modal">Get Route</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock%}  
+
+
+{% comment %} <a href="{% url 'logout' %}" class="btn btn-secondary" style="margin-right: 10px;">Log Out</a>
+               
+              </div> {% endcomment %}

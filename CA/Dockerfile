@@ -19,10 +19,10 @@ WORKDIR /usr/src/app
 # Now copy this to the image and install everything in it. Make sure to install uwsgi - it may not be in the source
 # environment.
 COPY ENV.yml /usr/src/app
-RUN conda env create -n CA1 --file ENV.yml
+RUN conda env create -n CA2 --file ENV.yml
 # Make RUN commands use the new environment
 # See https://pythonspeed.com/articles/activate-conda-dockerfile/ for explanation
-RUN echo "conda activate CA1" >> ~/.bashrc
+RUN echo "conda activate CA2" >> ~/.bashrc
 SHELL ["/bin/bash", "--login", "-c"]
 # Set up conda to match our test environment
 RUN conda config --add channels conda-forge && conda config --set channel_priority strict

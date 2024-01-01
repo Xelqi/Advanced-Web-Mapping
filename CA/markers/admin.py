@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import bikes
 from leaflet.admin import LeafletGeoAdmin
+from .models import bikes
 
-# Register your models here.
-admin.site.register(bikes, admin.ModelAdmin)
+@admin.register(bikes)
+class BikeAdmin(LeafletGeoAdmin):
+    list_display = ("id", "name", "address", "latitude", "longitude", "created_at", "updated_at")

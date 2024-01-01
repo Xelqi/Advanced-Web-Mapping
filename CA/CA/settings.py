@@ -18,6 +18,8 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'markers/static/', 'serviceworker.js')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -46,6 +48,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'leaflet',
+    'rest_framework',
+    'pwa',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'CA.urls'
@@ -80,6 +86,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'CA.wsgi.application'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8001",
+    "http://localhost:8000",# Your Django development server
+    "https://api.jcdecaux.com",
+    "https://bikelocator.xyz",
+]
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -88,9 +100,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'gis',
-        'USER': 'milo',
-        'PASSWORD': 'ilovewebmapping',
-        'HOST': 'localhost',
+        'USER': 'docker',
+        'PASSWORD': 'docker',
+        'HOST': 'wmap_postgis',
         'PORT': '5432',
     },
 }
@@ -134,21 +146,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (53.34594613825005, -6.26139945607668),
-    'DEFAULT_ZOOM': 6,
-    'MIN_ZOOM': 3,
+    'DEFAULT_ZOOM': 8,
+    'MIN_ZOOM': 4,
     'MAX_ZOOM': 18,
     'RESET_VIEW': False,
     'SCALE': None,
     'OPACITY': 0.5,
 }
 # settings.py
-LOGIN_REDIRECT_URL = "map"
-LOGOUT_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "members"
+LOGOUT_REDIRECT_URL = "index2"
 
 # Database settings based on hostname
-if socket.gethostname() == "DESKTOP-NK03LFM":
+if socket.gethostname() == "MSI":
     DATABASES["default"]["HOST"] = "localhost"
-    DATABASES["default"]["PORT"] = 23456
+    DATABASES["default"]["PORT"] = 25432
     DEPLOY_SECURE = False
 else:
     DATABASES["default"]["HOST"] = "wmap_postgis"
@@ -161,7 +173,7 @@ else:
 if DEPLOY_SECURE:
     DEBUG = False
     TEMPLATES[0]["OPTIONS"]["debug"] = False
-    ALLOWED_HOSTS = ['bikelocator.xyz', '20.93.6.220']
+    ALLOWED_HOSTS = ['bikelocator.xyz', '20.93.6.220', 'localhost', '127.0.0.1',]
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
 else:
@@ -170,5 +182,45 @@ else:
     ALLOWED_HOSTS = ['*']
     CSRF_COOKIE_SECURE = False
     SESSION_COOKIE_SECURE = False
-
+DEBUG = True
 CRISPY_FAIL_SILENTLY = not DEBUG
+
+
+PWA_APP_NAME = 'DB App'
+PWA_APP_DESCRIPTION = "AWM CA2 Milosz Lewandowski"
+PWA_APP_THEME_COLOR = '#0A0302'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/assets/manifest-icon-192.maskable.png',
+        'sizes': '192x192'
+    }
+]
+PWA_APP_ICONS_APPLE = [
+    {
+        'src': '/static/assets/manifest-icon-192.maskable.png',
+        'sizes': '192x192'
+    }
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': '/static/assets/apple-splash-640-1136.jpg',
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+    }
+]
+
+# Fix the screenshots section
+PWA_APP_SCREENSHOTS = [
+    {
+        'src': '/static/assets/apple-splash-750-1334.jpg',
+        'sizes': '750x1334',
+        "form_factor": "wide",
+    }
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'en-US'
